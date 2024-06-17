@@ -29,17 +29,31 @@ module.exports = {
         path: "app",                // Edit this to customize the path to start the shell from
         message: [
           "pip install gradio devicetorch",
-          "pip install -r requirements.txt"
+          "pip install -r requirements.txt",
+          "pip install --no-cache-dir -U openmim",
+          "mim install mmengine",
+          'mim install "mmcv>=2.0.1"',
+          'mim install "mmdet>=3.1.0"',
+          'mim install "mmpose>=1.1.0"',
         ]
       }
     },
-    //  Uncomment this step to add automatic venv deduplication (Experimental)
-    //  {
-    //    method: "fs.link",
-    //    params: {
-    //      venv: "app/env"
-    //    }
-    //  },
+    {
+      method: "shell.run",
+      params: {
+        venv: "env",                // Edit this to customize the venv folder path
+        path: "app",                // Edit this to customize the path to start the shell from
+        message: [
+          "python download.py"
+        ]
+      }
+    },
+    {
+      method: "fs.link",
+      params: {
+        venv: "app/env"
+      }
+    },
     {
       method: "notify",
       params: {
